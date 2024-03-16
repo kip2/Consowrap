@@ -27,8 +27,13 @@ pub fn run_command(input: String) -> () {
         Err(e) => panic!("Error getting directory path: {}", e),
     };
 
-    // todo: error handling
     let parts: Vec<&str> = input.split_whitespace().collect();
+
+    // Error: Insufficient number of arguments provide.
+    if parts.len() < 2 {
+        eprintln!("Error: Not enough arguments.");
+        return;
+    }
 
     let command = parts[1];
     let arguments = &parts[2..];
@@ -44,9 +49,9 @@ pub fn run_command(input: String) -> () {
         }
     };
 
-    let modify_command = format!("{} {}", command_path, arguments.join(" "));
+    let commandline = format!("{} {}", command_path, arguments.join(" "));
 
-    run(modify_command);
+    run(commandline);
 }
 
 pub fn run(command_line: String) -> std::io::Result<()> {
