@@ -51,7 +51,7 @@ pub fn run(input: String) -> () {
 
     let commandline = format!("{} {}", command_path, arguments.join(" "));
 
-    run_command(commandline);
+    run_command(commandline).expect("Error: Command execution failed.");
 }
 
 pub fn run_command(command_line: String) -> std::io::Result<()> {
@@ -59,13 +59,7 @@ pub fn run_command(command_line: String) -> std::io::Result<()> {
         .arg("-c")
         .arg(command_line)
         .status()
-        .map(|status| {
-            if status.success() {
-                ();
-            } else {
-                println!("Command executed with error");
-            }
-        })
+        .and_then(|status| if status.success() { Ok(()) } else { Ok(()) })
 }
 
 fn find_command_path<P: AsRef<Path>>(dir: &P, file_name: &str) -> Option<String> {
