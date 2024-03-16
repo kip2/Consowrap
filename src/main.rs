@@ -12,13 +12,13 @@ extern crate consowrap;
 use consowrap::Args;
 
 fn main() {
-    let mut args: Vec<String> = env::args().collect();
-    let mut args = args.join(" ");
+    let args: Vec<String> = env::args().collect();
+    let args = args.join(" ");
 
-    run_command(args);
+    run(args);
 }
 
-pub fn run_command(input: String) -> () {
+pub fn run(input: String) -> () {
     let env_path = "./env.json";
     let json_key = "command_directory_path";
 
@@ -51,10 +51,10 @@ pub fn run_command(input: String) -> () {
 
     let commandline = format!("{} {}", command_path, arguments.join(" "));
 
-    run(commandline);
+    run_command(commandline);
 }
 
-pub fn run(command_line: String) -> std::io::Result<()> {
+pub fn run_command(command_line: String) -> std::io::Result<()> {
     Command::new("sh")
         .arg("-c")
         .arg(command_line)
