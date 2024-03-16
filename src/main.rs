@@ -1,8 +1,17 @@
+use clap::Parser;
 use serde_json::Value;
 use std::fs::File;
 use std::io::Read;
 use std::path::Path;
 use walkdir::WalkDir;
+
+extern crate consowrap;
+use consowrap::Args;
+
+fn main() {
+    let args = Args::parse();
+    println!("{:?}", args.one);
+}
 
 pub fn run_command(command_name: &str) {
     let env_path = "./env.json";
@@ -48,8 +57,6 @@ fn get_target_directory_path(file_path: &str, json_key: &str) -> Result<String, 
         None => Err("File not found.".to_string()),
     }
 }
-
-fn main() {}
 
 #[cfg(test)]
 mod tests {
