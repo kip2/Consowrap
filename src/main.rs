@@ -78,16 +78,17 @@ fn find_command_path<P: AsRef<Path>>(dir: &P, file_name: &str) -> Option<String>
 }
 
 fn get_command_directory_path(file_path: &str, json_key: &str) -> Result<String, String> {
-    let mut file = File::open(file_path).expect("File could not be opened.");
+    let mut file = File::open(file_path).map_err(|e| format!("File could not be opened."))?;
     let mut contents = String::new();
     file.read_to_string(&mut contents)
-        .expect("Failed to load file.");
+        .map_err(|e| format!("Failed to load file."))?;
 
-    let json: Value = serde_json::from_str(&contents).unwrap();
+    let json: Value =
+        serde_json::from_str(&contents).map_err(|_| "Failed to parse JSON.".to_string())?;
 
     match json[json_key].as_str() {
         Some(path) => Ok(path.to_string()),
-        None => Err("File not found.".to_string()),
+        None => Err("Specified key not found in JSON file.".to_string()),
     }
 }
 
@@ -122,13 +123,31 @@ mod tests {
     fn test_get_command_directory_path() {
         let path = "./tests/env.json";
         let json_key = "test_command_directory_path";
-        assert_eq!(
-            get_command_directory_path(path, json_key).unwrap(),
-            "./tests/Commands"
-        );
-        assert_ne!(
-            get_command_directory_path(path, json_key).unwrap(),
-            "./tests/wrongPath"
-        );
+        match get_command_directory_path(path, json_key) {
+            Ok(result) => assert_eq!(result, "./tests/Commands"),
+            Err(e) => panic!("Unexpected error: {}", e),
+        }
+        match get_command_directory_path(path, json_key) {
+            Ok(result) => assert_ne!(result, "./tests/wrongPath"),
+            Err(e) => panic!("Unexpected error: {}", e),
+        }
+
+        let wrong_path = "./tests/wrong.json";
+        match get_command_directory_path(wrong_path, json_key) {
+            Ok(_) => panic!("Should have fialed but didn't"),
+            Err(e) => assert_eq!(e, "File could not be opened."),
+        }
+
+        let wrong_key = "wrong_JSON_key";
+        match get_command_directory_path(path, wrong_key) {
+            Ok(_) => panic!("Should have fialed but didn't"),
+            Err(e) => assert_eq!(e, "Specified key not found in JSON file."),
+        }
+
+        let invalid_json = "./tests/invalid.json";
+        match get_command_directory_path(invalid_json, json_key) {
+            Ok(_) => panic!("Should have fialed due to invalid JSON format but didn't"),
+            Err(e) => assert_eq!(e, "Failed to parse JSON."),
+        }
     }
 }
