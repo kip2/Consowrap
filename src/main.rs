@@ -7,8 +7,7 @@ use std::process::Command;
 use walkdir::WalkDir;
 
 fn main() {
-    let args: Vec<String> = env::args().collect();
-    let args = args.join(" ");
+    let args = env::args().collect::<Vec<String>>().join(" ");
 
     run(args);
 }
