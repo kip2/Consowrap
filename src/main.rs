@@ -1,15 +1,10 @@
-use clap::Parser;
 use serde_json::Value;
 use std::env;
-use std::fmt::Arguments;
 use std::fs::File;
 use std::io::Read;
 use std::path::Path;
 use std::process::Command;
 use walkdir::WalkDir;
-
-extern crate consowrap;
-use consowrap::Args;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
