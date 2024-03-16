@@ -1,30 +1,69 @@
 use clap::Parser;
 use serde_json::Value;
+use std::env;
+use std::fmt::Arguments;
 use std::fs::File;
 use std::io::Read;
 use std::path::Path;
+use std::process::Command;
 use walkdir::WalkDir;
 
 extern crate consowrap;
 use consowrap::Args;
 
 fn main() {
-    let args = Args::parse();
-    println!("{:?}", args.one);
+    let mut args: Vec<String> = env::args().collect();
+    let mut args = args.join(" ");
+
+    run_command(args);
 }
 
-pub fn run_command(command_name: &str) {
+pub fn run_command(input: String) -> () {
     let env_path = "./env.json";
     let json_key = "command_directory_path";
-    let command_name = "ls";
-    let command_directory_path = match get_target_directory_path(env_path, json_key) {
+
+    let command_directory_path = match get_command_directory_path(env_path, json_key) {
         Ok(path) => path,
         Err(e) => panic!("Error getting directory path: {}", e),
     };
-    let command_path = search_file_path(command_directory_path, command_name);
+
+    // todo: error handling
+    let parts: Vec<&str> = input.split_whitespace().collect();
+
+    let command = parts[1];
+    let arguments = &parts[2..];
+
+    let command_path = match find_command_path(&command_directory_path, command) {
+        Some(path) => path,
+        None => {
+            eprintln!(
+                "Command '{}' not found in directory '{}'",
+                command, command_directory_path
+            );
+            return;
+        }
+    };
+
+    let modify_command = format!("{} {}", command_path, arguments.join(" "));
+
+    run(modify_command);
 }
 
-fn search_file_path<P: AsRef<Path>>(dir: P, file_name: &str) -> Option<String> {
+pub fn run(command_line: String) -> std::io::Result<()> {
+    Command::new("sh")
+        .arg("-c")
+        .arg(command_line)
+        .status()
+        .map(|status| {
+            if status.success() {
+                ();
+            } else {
+                println!("Command executed with error");
+            }
+        })
+}
+
+fn find_command_path<P: AsRef<Path>>(dir: &P, file_name: &str) -> Option<String> {
     for entry in WalkDir::new(dir) {
         let entry = match entry {
             Ok(e) => e,
@@ -44,7 +83,7 @@ fn search_file_path<P: AsRef<Path>>(dir: P, file_name: &str) -> Option<String> {
     None
 }
 
-fn get_target_directory_path(file_path: &str, json_key: &str) -> Result<String, String> {
+fn get_command_directory_path(file_path: &str, json_key: &str) -> Result<String, String> {
     let mut file = File::open(file_path).expect("File could not be opened.");
     let mut contents = String::new();
     file.read_to_string(&mut contents)
@@ -63,38 +102,38 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_search_file_path() {
+    fn test_find_command_path() {
         let env_path = "./tests/env.json";
         let json_key = "test_command_directory_path";
-        let command_path = get_target_directory_path(env_path, json_key).unwrap();
+        let command_path = get_command_directory_path(env_path, json_key).unwrap();
         let target_file1 = "test1";
         let target_file2 = "cat";
         let target_file3 = "ls";
 
         assert_eq!(
-            search_file_path(&command_path, target_file1).unwrap(),
+            find_command_path(&command_path, target_file1).unwrap(),
             "./tests/Commands/test1"
         );
         assert_eq!(
-            search_file_path(&command_path, target_file2).unwrap(),
+            find_command_path(&command_path, target_file2).unwrap(),
             "./tests/Commands/cat"
         );
         assert_eq!(
-            search_file_path(&command_path, target_file3).unwrap(),
+            find_command_path(&command_path, target_file3).unwrap(),
             "./tests/Commands/ls"
         );
     }
 
     #[test]
-    fn test_read_target_directory_path() {
+    fn test_get_command_directory_path() {
         let path = "./tests/env.json";
         let json_key = "test_command_directory_path";
         assert_eq!(
-            get_target_directory_path(path, json_key).unwrap(),
+            get_command_directory_path(path, json_key).unwrap(),
             "./tests/Commands"
         );
         assert_ne!(
-            get_target_directory_path(path, json_key).unwrap(),
+            get_command_directory_path(path, json_key).unwrap(),
             "./tests/wrongPath"
         );
     }
