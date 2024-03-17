@@ -39,19 +39,15 @@ fn main() {
 
 pub fn list_commands(directory: &str) {
     let path = Path::new(directory);
-    if let Ok(entries) = fs::read_dir(path) {
-        for entry in entries.filter_map(Result::ok) {
-            let path = entry.path();
-            if path.is_file() {
-                if let Some(filename) = path.file_name() {
-                    if let Some(filename_str) = filename.to_str() {
-                        println!("{}", filename_str);
-                    }
-                }
-            }
+
+    match fs::read_dir(path) {
+        Ok(entries) => {
+            entries.filter_map(Result::ok)
+                .filter(|entry| entry.path().is_file())
+                .filter_map(|entry| entry.path().file_name().and_then(|name| name.to_str()).map(String::from))
+                .for_each(|filename_str| println!("{}", filename_str));
         }
-    } else {
-        println!("Directory not found: {}", directory);
+        Err(_) => println!("Directory not found: {}", directory),
     }
 }
 
@@ -67,7 +63,7 @@ pub fn run(input: String) -> () {
     let parts: Vec<&str> = input.split_whitespace().collect();
 
     // Error: Insufficient number of arguments provide.
-    if parts.len() < 2 {
+    if parts.len() < 1 {
         eprintln!("Error: Not enough arguments.");
         return;
     }
