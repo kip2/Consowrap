@@ -1,10 +1,10 @@
 use serde_json::Value;
-use std::env;
 use std::fs::File;
 use std::io::Read;
 use std::path::Path;
 use std::process::Command;
 use walkdir::WalkDir;
+use std::fs;
 
 use clap::{Parser, ArgAction};
 
@@ -28,11 +28,30 @@ fn main() {
     let args = Args::parse();
 
     if args.list {
-        println!("LIST");
+        let commands_directory_path = "./Commands";
+        list_commands(commands_directory_path);
     } else if !args.command_and_args.is_empty() {
         run(args.command_and_args.join(" "));
     } else {
         println!("No command specified.");
+    }
+}
+
+pub fn list_commands(directory: &str) {
+    let path = Path::new(directory);
+    if let Ok(entries) = fs::read_dir(path) {
+        for entry in entries.filter_map(Result::ok) {
+            let path = entry.path();
+            if path.is_file() {
+                if let Some(filename) = path.file_name() {
+                    if let Some(filename_str) = filename.to_str() {
+                        println!("{}", filename_str);
+                    }
+                }
+            }
+        }
+    } else {
+        println!("Directory not found: {}", directory);
     }
 }
 
