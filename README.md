@@ -67,5 +67,3 @@ Conclusion
 consowrap is designed to make command execution more efficient and standardized.
 
 By compiling it for your environment and understanding its usage, you can enhance your workflow and productivity.
-
-k
