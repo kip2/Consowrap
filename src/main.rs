@@ -6,10 +6,37 @@ use std::path::Path;
 use std::process::Command;
 use walkdir::WalkDir;
 
-fn main() {
-    let args = env::args().collect::<Vec<String>>().join(" ");
+use clap::{Parser, ArgAction};
 
-    run(args);
+#[derive(Parser, Debug)]
+struct Args {
+    /// Print list of available commands
+    #[arg(
+        short,
+        long, 
+        help = "Print list of available commands",
+        action = ArgAction::SetTrue
+    )]
+    list: bool,
+
+    /// Command to execute
+    #[arg(required_unless_present = "list")]
+    command_and_args: Vec<String>,
+}
+
+fn main() {
+    let command_line = Args::parse();
+    if command_line.list {
+        println!("LIST");
+    } else if let Some((command, args)) = command_line.command_and_args.split_first(){
+        println!("Command: {}", command);
+        println!("Arguments: {:?}", args);
+    } else {
+        println!("No command specified.");
+    }
+    // let args = env::args().collect::<Vec<String>>().join(" ");
+
+    // run(args);
 }
 
 pub fn run(input: String) -> () {
