@@ -25,18 +25,15 @@ struct Args {
 }
 
 fn main() {
-    let command_line = Args::parse();
-    if command_line.list {
+    let args = Args::parse();
+
+    if args.list {
         println!("LIST");
-    } else if let Some((command, args)) = command_line.command_and_args.split_first(){
-        println!("Command: {}", command);
-        println!("Arguments: {:?}", args);
+    } else if !args.command_and_args.is_empty() {
+        run(args.command_and_args.join(" "));
     } else {
         println!("No command specified.");
     }
-    // let args = env::args().collect::<Vec<String>>().join(" ");
-
-    // run(args);
 }
 
 pub fn run(input: String) -> () {
@@ -56,8 +53,8 @@ pub fn run(input: String) -> () {
         return;
     }
 
-    let command = parts[1];
-    let arguments = &parts[2..];
+    let command = parts[0];
+    let arguments = &parts[1..];
 
     let command_path = match find_command_path(&command_directory_path, command) {
         Some(path) => path,
@@ -75,7 +72,7 @@ pub fn run(input: String) -> () {
     run_command(commandline).expect("Error: Command execution failed.");
 }
 
-pub fn run_command(command_line: String) -> std::io::Result<()> {
+fn run_command(command_line: String) -> std::io::Result<()> {
     Command::new("sh")
         .arg("-c")
         .arg(command_line)
