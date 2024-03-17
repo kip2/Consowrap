@@ -1,51 +1,52 @@
 <h1 align="center"> Consowrap </h1>
 
-cosowrap is a command-line utility designed to facilitate the execution of commands with optional arguments and options.
+consowrap is a command-line utility designed to facilitate the execution of commands with optional arguments and options.
 
 It provides a streamlined interface for running various commands in a consistent manner.
 
 ## Features
-Execute commands in the form of `cosowrap command arg1`, where `command` is the command you wish to run and `arg1` is the argument to the command.
+Execute commands in the form of `consowrap command arg1`, where `command` is the command you wish to run and `arg1` is the argument to the command.
 
-Supports options for commands, allowing you to execute commands like `cosowrap command -option arg1`, where `-option` is the option for the command.
+Supports options for commands, allowing you to execute commands like `consowrap command -option arg1`, where `-option` is the option for the command.
 
 ## Getting Started
-To use cosowrap, follow these steps:
+To use consowrap, follow these steps:
 
-Compile for Your Environment: Ensure that you compile cosowrap for your specific environment. This step is crucial to ensure compatibility and performance.
+Compile for Your Environment: Ensure that you compile consowrap for your specific environment. This step is crucial to ensure compatibility and performance.
 
-Deploy: Once compiled, deploy cosowrap to your desired location.
+Deploy: Once compiled, deploy consowrap to your desired location.
   
 <h1 align="center">
 Usage
 </h1>
 
 ## Listing Commands
-To list all available commands in cosowrap, you can use a specific command designed for this purpose. 
+To list all available commands in consowrap, you can use a specific command designed for this purpose. 
 
-This feature helps users to discover and understand the capabilities of cosowrap.
+This feature helps users to discover and understand the capabilities of consowrap.
 
 ```bash
-cosowrap list-commands
+consowrap -l
+consowrap --list
 ```
 
 ## Executing Commands
 To execute a command, use the following syntax:
 
 ```bash
-cosowrap command arg1
+consowrap command arg1
 ```
 
 For commands that require options:
 
 ```bash
-cosowrap command -option arg1
+consowrap command -option arg1
 ```
 
 <h1 align="center">
 Compilation Guide
 </h1>
-To compile cosowrap for your environment, follow these steps:
+To compile consowrap for your environment, follow these steps:
 
 1. Clone the repository to your local machine.
 2. Navigate to the source directory.
@@ -59,7 +60,7 @@ Ensure you have the necessary build tools and dependencies installed before comp
 Conclusion
 </h1>
 
-cosowrap is designed to make command execution more efficient and standardized.
+consowrap is designed to make command execution more efficient and standardized.
 
 By compiling it for your environment and understanding its usage, you can enhance your workflow and productivity.
 
