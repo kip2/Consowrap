@@ -1,10 +1,9 @@
 use serde_json::Value;
-use std::fs::File;
-use std::io::Read;
 use std::path::Path;
 use std::process::Command;
 use walkdir::WalkDir;
-use std::fs;
+use std::fs::{self, File};
+use std::io::Read;
 
 use clap::{Parser, ArgAction};
 
@@ -19,7 +18,7 @@ struct Args {
     )]
     list: bool,
 
-    /// Command to execute
+    /// Command-line to execute
     #[arg(required_unless_present = "list")]
     command_and_args: Vec<String>,
 }
@@ -116,10 +115,10 @@ fn find_command_path<P: AsRef<Path>>(dir: &P, file_name: &str) -> Option<String>
 }
 
 fn get_command_directory_path(file_path: &str, json_key: &str) -> Result<String, String> {
-    let mut file = File::open(file_path).map_err(|e| format!("File could not be opened."))?;
+    let mut file = File::open(file_path).map_err(|_e| format!("File could not be opened."))?;
     let mut contents = String::new();
     file.read_to_string(&mut contents)
-        .map_err(|e| format!("Failed to load file."))?;
+        .map_err(|_e| format!("Failed to load file."))?;
 
     let json: Value =
         serde_json::from_str(&contents).map_err(|_| "Failed to parse JSON.".to_string())?;
