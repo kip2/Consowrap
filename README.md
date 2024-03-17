@@ -3,7 +3,7 @@
 cosowrap is a command-line utility designed to facilitate the execution of commands with optional arguments and options. It provides a streamlined interface for running various commands in a consistent manner.
 
 ## Features
-Execute commands in the form of cosowrap command arg1, where command is the command you wish to run and arg1 is the argument to the command.
+Execute commands in the form of `cosowrap command arg1`, where `command` is the command you wish to run and `arg1` is the argument to the command.
 Supports options for commands, allowing you to execute commands like cosowrap command -option arg1, where -option is the option for the command.
 
 ## Getting Started
