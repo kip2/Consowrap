@@ -12,9 +12,11 @@ Supports options for commands, allowing you to execute commands like `consowrap 
 ## Getting Started
 To use consowrap, follow these steps:
 
-Compile for Your Environment: Ensure that you compile consowrap for your specific environment. This step is crucial to ensure compatibility and performance.
+1. **Compile for Your Environment**: Ensure that you compile consowrap for your specific environment. This step is crucial to ensure compatibility and performance.
+2. **Deploy**: Once compiled, deploy consowrap to your desired location.
+3. **Prepare Commands Directory**: Place the executable files of your commands in the `Commands` directory. consowrap requires these executables to be in the `Commands` directory to function properly.
 
-Deploy: Once compiled, deploy consowrap to your desired location.
+After completing these steps, consowrap will be ready to use with the commands you have set up.
   
 <h1 align="center">
 Usage
