@@ -1,4 +1,4 @@
-# Consowrap
+<h1 align="center"> Consowrap </h1>
 
 cosowrap is a command-line utility designed to facilitate the execution of commands with optional arguments and options. It provides a streamlined interface for running various commands in a consistent manner.
 
