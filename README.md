@@ -12,8 +12,10 @@ To use cosowrap, follow these steps:
 Compile for Your Environment: Ensure that you compile cosowrap for your specific environment. This step is crucial to ensure compatibility and performance.
 
 Deploy: Once compiled, deploy cosowrap to your desired location.
-
-# Usage
+  
+<h1 align="center">
+Usage
+</h1>
 
 ## Listing Commands
 To list all available commands in cosowrap, you can use a specific command designed for this purpose. This feature helps users to discover and understand the capabilities of cosowrap.
@@ -35,7 +37,9 @@ For commands that require options:
 cosowrap command -option arg1
 ```
 
-# Compilation Guide
+<h1 align="center">
+Compilation Guide
+</h1>
 To compile cosowrap for your environment, follow these steps:
 
 1. Clone the repository to your local machine.
@@ -46,7 +50,9 @@ To compile cosowrap for your environment, follow these steps:
 
 Ensure you have the necessary build tools and dependencies installed before compiling.
 
-# Conclusion
+<h1 align="center">
+Conclusion
+</h1>
 
 cosowrap is designed to make command execution more efficient and standardized. By compiling it for your environment and understanding its usage, you can enhance your workflow and productivity.
 
