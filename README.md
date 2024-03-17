@@ -27,6 +27,8 @@ This feature helps users to discover and understand the capabilities of consowra
 
 ```bash
 consowrap -l
+
+# Otherwise
 consowrap --list
 ```
 
