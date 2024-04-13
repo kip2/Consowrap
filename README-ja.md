@@ -1,4 +1,6 @@
-<div align="center">[English](README.md)|[日本語](README-ja.md)</div>
+<p align="center">
+    <a href="README.md">English</a> | <a href="README-ja.md">日本語</a>
+</p>
 
 <h1 align="center"> consowrap </h1>
 
