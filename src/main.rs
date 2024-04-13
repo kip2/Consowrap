@@ -18,7 +18,7 @@ struct Args {
     list: bool,
 
     /// Command-line to execute
-    #[arg(required_unless_present = "list")]
+    #[arg(required_unless_present = "list", trailing_var_arg = true)]
     command_and_args: Vec<String>,
 }
 
@@ -26,8 +26,8 @@ fn main() {
     let args = Args::parse();
 
     if args.list {
-        let commands_directory_path = "./Commands";
-        list_commands(commands_directory_path);
+        let commands_directory_path = get_command_directory_path().expect("Failed to get directory path");
+        list_commands(&commands_directory_path);
     } else if !args.command_and_args.is_empty() {
         run(args.command_and_args.join(" "));
     } else {
@@ -50,9 +50,6 @@ pub fn list_commands(directory: &str) {
 }
 
 pub fn run(input: String) -> () {
-    // let env_path = "./env.json";
-    // let json_key = "command_directory_path";
-
     let command_directory_path = match get_command_directory_path() {
         Ok(path) => path,
         Err(e) => panic!("{}", e),
