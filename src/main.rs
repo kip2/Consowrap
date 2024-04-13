@@ -4,6 +4,8 @@ use std::process::Command;
 use walkdir::WalkDir;
 use std::fs::{self, File};
 use std::io::Read;
+use dotenv::dotenv;
+use std::env;
 
 use clap::{Parser, ArgAction};
 
@@ -129,9 +131,27 @@ fn get_command_directory_path(file_path: &str, json_key: &str) -> Result<String,
     }
 }
 
+fn get_command_directory_path2() -> Result<String, String> {
+    dotenv().ok();
+
+    let key = "COMMAND_DIRECTORY_PATH";
+
+    get_env_var(key)
+}
+
+fn get_env_var(key: &str) -> Result<String, String> {
+    env::var(key).map_err(|_| format!("{} is not set in .env file", key))
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn test_get_command_directory_path2() {
+        let path = get_command_directory_path2().unwrap();
+        assert_eq!(path, "./Commands");
+    }
 
     #[test]
     fn test_find_command_path() {
