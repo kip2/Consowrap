@@ -32,7 +32,7 @@ cargo build --release
 配置したファイルに実行権限を付与して下さい。
 
 ```shell
-sudo chmod +x consowrap
+chmod +x consowrap
 ```
 
 <h2 align="center">設定</h2>
@@ -63,10 +63,10 @@ COMMAND_DRECTORY_PATH="./Commands";
 以下のコマンドで、使用可能なコマンド(`.env`に指定したディレクトリのファイル)の一覧が表示されます。
 
 ```shell
-consowrap -l
+./consowrap -l
 
 # もしくは
-consowrap --list
+./consowrap --list
 ```
 
 現在、`.env`に指定したディレクトリ内のファイルのみを表示するようになっているので、コマンドラインツール以外のものも表示される点に注意してください。
@@ -76,10 +76,10 @@ consowrap --list
 以下のような形でコマンドを実行できます。
 
 ```shell
-consowrap command arg1 arg2
+./consowrap command arg1 arg2
 
 # optionも付与する場合
-consowrap command -option arg1 arg2
+./consowrap command -option arg1 arg2
 ```
 
 ### ヘルプ
@@ -87,9 +87,9 @@ consowrap command -option arg1 arg2
 困ったらヘルプを呼び出してください。
 
 ```shell
-consowrap -h
+./consowrap -h
 
 # もしくは
-consowrap --help
+./consowrap --help
 ```
 

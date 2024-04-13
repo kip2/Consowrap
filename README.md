@@ -30,7 +30,7 @@ Place the built executable in your directory. The executable will be generated a
 Grant execution permissions to the placed file:
 
 ```shell
-sudo chmod +x consowrap
+chmod +x consowrap
 ```
 
 <h2 align="center">Configuration</h2>
@@ -56,10 +56,10 @@ If a `.env` file does not exist, one will be automatically created. Include the 
 Use the following command to display a list of available commands (files in the directory specified in `.env`):
 
 ```shell
-consowrap -l
+./consowrap -l
 
 # Or
-consowrap --list
+./consowrap --list
 ```
 
 Note that this will display only the files within the directory specified in `.env`, including non-command-line tools.
@@ -69,10 +69,10 @@ Note that this will display only the files within the directory specified in `.e
 Execute commands in the following format:
 
 ```shell
-consowrap command arg1 arg2
+./consowrap command arg1 arg2
 
 # If adding options
-consowrap command -option arg1 arg2
+./consowrap command -option arg1 arg2
 ```
 
 ### Help
@@ -80,8 +80,8 @@ consowrap command -option arg1 arg2
 If you need assistance, call up help:
 
 ```shell
-consowrap -h
+./consowrap -h
 
 # Or
-consowrap --help
+./consowrap --help
 ```
