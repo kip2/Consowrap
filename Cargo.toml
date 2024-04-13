@@ -8,5 +8,4 @@ edition = "2021"
 [dependencies]
 clap = { version = "4.5.3", features = ["derive"] }
 dotenv = "0.15.0"
-serde_json = "1.0.114"
 walkdir = "2.5.0"

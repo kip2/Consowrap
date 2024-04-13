@@ -1,9 +1,7 @@
-use serde_json::Value;
 use std::path::Path;
 use std::process::Command;
 use walkdir::WalkDir;
-use std::fs::{self, File};
-use std::io::Read;
+use std::fs::{self};
 use clap::{Parser, ArgAction};
 
 use consowrap::env::*;
