@@ -1,69 +1,85 @@
-<h1 align="center"> Consowrap </h1>
+[English](README.md)|[日本語](README-ja.md)
 
-consowrap is a command-line utility designed to facilitate the execution of commands with optional arguments and options.
+<h1 align="center"> consowrap </h1>
 
-It provides a streamlined interface for running various commands in a consistent manner.
+A simple tool that manages command-line tools and executes commands all in one place.
 
-## Features
-Execute commands in the form of `consowrap command arg1`, where `command` is the command you wish to run and `arg1` is the argument to the command.
+<h2 align="center">Prerequisites</h2>
 
-Supports options for commands, allowing you to execute commands like `consowrap command -option arg1`, where `-option` is the option for the command.
+- Create a directory to store your command-line tools and place them accordingly.
+- This software is not distributed as binary files. Please build it if you wish to use it.
 
-## Getting Started
-To use consowrap, follow these steps:
+<h2 align="center">Build</h2>
 
-1. **Compile for Your Environment**: Ensure that you compile consowrap for your specific environment. This step is crucial to ensure compatibility and performance.
-2. **Deploy**: Once compiled, deploy consowrap to your desired location.
-3. **Prepare Commands Directory**: Place the executable files of your commands in the `Commands` directory. consowrap requires these executables to be in the `Commands` directory to function properly.
+Execute the following in an environment where Rust is installed:
 
-After completing these steps, consowrap will be ready to use with the commands you have set up.
-  
-<h1 align="center">
-Usage
-</h1>
+```shell
+cargo build --release
+```
 
-## Listing Commands
-To list all available commands in consowrap, you can use a specific command designed for this purpose. 
+Place the built executable in your directory. The executable will be generated at the following path:
 
-This feature helps users to discover and understand the capabilities of consowrap.
+```shell
+./target/release/consowrap
+```
 
-```bash
+### Grant Execution Permissions
+
+Grant execution permissions to the placed file:
+
+```shell
+sudo chmod +x consowrap
+```
+
+<h2 align="center">Configuration</h2>
+
+### Specify the directory for command-line tools in the `.env` file.
+
+In the `.env` file, specify the directory path where you want to manage your command-line tools. The format is as follows:
+
+```.env
+# Format of notation
+COMMAND_DRECTORY_PATH="your_commands_directory_path";
+
+# Example
+COMMAND_DRECTORY_PATH="./Commands";
+```
+
+If a `.env` file does not exist, one will be automatically created. Include the directory path for your command-line tools in the created `.env` file.
+
+<h2 align="center">Usage</h2>
+
+### List Commands
+
+Use the following command to display a list of available commands (files in the directory specified in `.env`):
+
+```shell
 consowrap -l
 
-# Otherwise
+# Or
 consowrap --list
 ```
 
-## Executing Commands
-To execute a command, use the following syntax:
+Note that this will display only the files within the directory specified in `.env`, including non-command-line tools.
 
-```bash
-consowrap command arg1
+### Use Commands
+
+Execute commands in the following format:
+
+```shell
+consowrap command arg1 arg2
+
+# If adding options
+consowrap command -option arg1 arg2
 ```
 
-For commands that require options:
+### Help
 
-```bash
-consowrap command -option arg1
+If you need assistance, call up help:
+
+```shell
+consowrap -h
+
+# Or
+consowrap --help
 ```
-
-<h1 align="center">
-Compilation Guide
-</h1>
-To compile consowrap for your environment, follow these steps:
-
-1. Clone the repository to your local machine.
-2. Navigate to the source directory.
-3. Run the build script corresponding to your operating system and architecture.
-4. Verify the compiled binary in the output directory.
-
-
-Ensure you have the necessary build tools and dependencies installed before compiling.
-
-<h1 align="center">
-Conclusion
-</h1>
-
-consowrap is designed to make command execution more efficient and standardized.
-
-By compiling it for your environment and understanding its usage, you can enhance your workflow and productivity.
